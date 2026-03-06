@@ -25,7 +25,8 @@ const allowedOrigins = (
 app.use(
   cors({
     origin: [
-      "http://localhost:5173"
+      "http://localhost:5173",
+      "https://marketnest-two.vercel.app"
     ],
     credentials: true
   })
