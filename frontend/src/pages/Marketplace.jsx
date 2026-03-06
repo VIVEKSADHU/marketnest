@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import api from "../lib/api";
+import axios from "axios";
 
 function Marketplace() {
 
@@ -19,8 +19,8 @@ function Marketplace() {
 
     try {
 
-      const res = await api.get(
-        `/api/products?search=${encodeURIComponent(search)}&category=${encodeURIComponent(category)}&page=${page}&limit=6`
+      const res = await axios.get(
+        `https://marketnest-api-y3k7.onrender.com/api/products?search=${encodeURIComponent(search)}&category=${encodeURIComponent(category)}&page=${page}&limit=6`
       );
 
       setProducts(res.data.products || []);
@@ -31,6 +31,8 @@ function Marketplace() {
       setError(
         err?.response?.data?.message ||
         err?.response?.data?.error ||
+        (err?.code === "ERR_NETWORK" ? "Network/CORS error: check deployed backend CORS + frontend API URL" : null) ||
+        err?.message ||
         "Failed to load products"
       );
 
